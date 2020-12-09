@@ -1,0 +1,25 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+.vscode
+
+# dependencies
+langtons-ant/node_modules
+langtons-ant/.pnp
+langtons-ant/.pnp.js
+
+# testing
+langtons-ant/coverage
+
+# production
+langtons-ant/build
+
+# misc
+langtons-ant.DS_Store
+langtons-ant.env.local
+langtons-ant.env.development.local
+langtons-ant.env.test.local
+langtons-ant.env.production.local
+
+langtons-ant/npm-debug.log*
+langtons-ant/yarn-debug.log*
+langtons-ant/yarn-error.log*

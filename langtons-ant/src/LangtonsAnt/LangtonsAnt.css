@@ -1,0 +1,16 @@
+.angtonsant_canvas__2dplane{
+    border: 2px solid black;
+}
+
+.angtonsant__speed__slider{
+    margin: 0 auto;
+    width: 50%;
+}
+
+.angtonsant__speed__slider>h4{
+margin-bottom: -5px;
+}
+
+.angtonsant>h4{
+    margin-top: -5px;
+}
