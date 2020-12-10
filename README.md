@@ -1,4 +1,4 @@
-# Raycasting
+# Langton's Ant
 
 A web-based animation tool to visualize Langton's ant
 ![](images/IMG_ReadMe.PNG)
