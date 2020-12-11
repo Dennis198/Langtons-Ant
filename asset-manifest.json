@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Langtons-Ant/static/css/main.ce25e635.chunk.css",
+    "main.js": "/Langtons-Ant/static/js/main.f39f8539.chunk.js",
+    "main.js.map": "/Langtons-Ant/static/js/main.f39f8539.chunk.js.map",
+    "runtime-main.js": "/Langtons-Ant/static/js/runtime-main.6d700e3b.js",
+    "runtime-main.js.map": "/Langtons-Ant/static/js/runtime-main.6d700e3b.js.map",
+    "static/js/2.99b3a49e.chunk.js": "/Langtons-Ant/static/js/2.99b3a49e.chunk.js",
+    "static/js/2.99b3a49e.chunk.js.map": "/Langtons-Ant/static/js/2.99b3a49e.chunk.js.map",
+    "static/js/3.af6f503f.chunk.js": "/Langtons-Ant/static/js/3.af6f503f.chunk.js",
+    "static/js/3.af6f503f.chunk.js.map": "/Langtons-Ant/static/js/3.af6f503f.chunk.js.map",
+    "index.html": "/Langtons-Ant/index.html",
+    "static/css/main.ce25e635.chunk.css.map": "/Langtons-Ant/static/css/main.ce25e635.chunk.css.map",
+    "static/js/2.99b3a49e.chunk.js.LICENSE.txt": "/Langtons-Ant/static/js/2.99b3a49e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6d700e3b.js",
+    "static/js/2.99b3a49e.chunk.js",
+    "static/css/main.ce25e635.chunk.css",
+    "static/js/main.f39f8539.chunk.js"
+  ]
+}
