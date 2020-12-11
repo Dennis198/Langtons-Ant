@@ -10,9 +10,6 @@ langtons-ant/.pnp.js
 # testing
 langtons-ant/coverage
 
-# production
-langtons-ant/build
-
 # misc
 langtons-ant.DS_Store
 langtons-ant.env.local

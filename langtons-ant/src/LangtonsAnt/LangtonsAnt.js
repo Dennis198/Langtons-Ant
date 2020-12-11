@@ -142,11 +142,12 @@ export default class LangtonsAnt extends React.Component{
         this.setState({mouseDown: !this.state.mouseDown})
     }
 
+    //
     moveAntOnClick(e){
-        this.setState({setNewAntPosition: !this.state.setNewAntPosition});
-        return;        
+        this.setState({setNewAntPosition: !this.state.setNewAntPosition});        
     }
 
+    //Sets the new Position of the Ant
     setNewAntPosition(e){
         var canvas = document.getElementById("2d-plane");
         var pos = this.getMousePos(canvas, e);
@@ -178,7 +179,6 @@ export default class LangtonsAnt extends React.Component{
                     onMouseUp={!setNewAntPosition? ()=>this.allowDrawOnCanvas():()=>null}
                     onMouseMove={(e) => this.mouseMove(e)}
                 ></canvas>
-
             </div>
         );
         
