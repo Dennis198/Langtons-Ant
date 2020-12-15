@@ -135,6 +135,10 @@ export default class LangtonsAnt extends React.Component{
     //Handles the speed change for the iteration timer
     handleSpeedChange(e, val){
         this.setState({speed: val});
+        if(this.state.isRunning){
+          this.stop();
+          this.start();
+        }
     }
 
     //Sets the Variable on Mouse Down to true/ Mouse UP to false
@@ -168,7 +172,7 @@ export default class LangtonsAnt extends React.Component{
                 <Button variant="outlined" onClick={()=>this.reset()}>Reset</Button>
                 <div className="angtonsant__speed__slider">
                     <h4>Computation Speed of an Iteration (ms)</h4>
-                    <PrettoSlider disabled={this.state.isRunning} valueLabelDisplay="on"
+                    <PrettoSlider valueLabelDisplay="on"
                         aria-label="pretto slider" defaultValue={DEAFULT_SPEED} min={0.1} max={100} step={0.1}
                         onChange={(e, val) => this.handleSpeedChange(e, val)}  
                     />
