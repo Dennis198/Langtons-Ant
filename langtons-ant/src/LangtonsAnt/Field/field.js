@@ -8,7 +8,8 @@ import Ant from "./Ant/ant";
 export default class Field{
     constructor(rows,cols,width){
         this.field = this.createField(rows,cols,width);
-        this.ant = new Ant(Math.floor(rows/2),Math.floor(cols/2),width,rows,cols); 
+        this.ant=[];
+        this.ant.push(new Ant(Math.floor(rows/2),Math.floor(cols/2),width,rows,cols, true)); 
     }
 
     //Creates the initial Field
@@ -31,27 +32,35 @@ export default class Field{
 
     //sets the Ant Position
     setAntPosition(i,j){
-        this.field[this.ant.pos.i][this.ant.pos.j].draw();
-        this.ant.setPosition(i,j);
-        this.ant.draw();
+        this.field[this.ant[0].pos.i][this.ant[0].pos.j].draw();
+        this.ant[0].setPosition(i,j);
+        this.ant[0].draw();
+    }
+
+    //Adds a new Ant
+    addNewAnt(i,j,width,){
+        this.ant.push(new Ant(i,j,width,this.field.length,this.field[0].length));
+        this.ant[this.ant.length-1].draw();
     }
 
     //Calculates the next Step of the ant and display the outcome
     nextStep(){
-        let pos = this.ant.pos;
-        if(this.field[pos.i][pos.j].state===false){
-            this.ant.turnRight();
-            this.field[pos.i][pos.j].setSwitchState();//=false;
-            this.field[pos.i][pos.j].draw();
-            this.ant.moveForward();
-        } else {
-            this.ant.turnLeft();            
-            this.field[pos.i][pos.j].setSwitchState();//=true;
-            this.field[pos.i][pos.j].draw();
-            this.ant.moveForward();
+        for(let i=0;i<this.ant.length;i++){
+            let pos = this.ant[i].pos;
+            if(this.field[pos.i][pos.j].state===false){
+                this.ant[i].turnRight();
+                this.field[pos.i][pos.j].setSwitchState();//=false;
+                this.field[pos.i][pos.j].draw();
+                this.ant[i].moveForward();
+            } else {
+                this.ant[i].turnLeft();            
+                this.field[pos.i][pos.j].setSwitchState();//=true;
+                this.field[pos.i][pos.j].draw();
+                this.ant[i].moveForward();
+            }          
+            this.ant[i].draw();
         }
-        
-        this.ant.draw();
+
     }
 
     //Draws the hole field and the ant
@@ -61,6 +70,8 @@ export default class Field{
                 this.field[i][j].draw();
             }
         }
-        this.ant.draw();
+        for(let i=0;i<this.ant.length;i++){
+            this.ant[i].draw();
+        }
     }
 }

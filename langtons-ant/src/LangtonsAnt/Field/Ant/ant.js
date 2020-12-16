@@ -8,13 +8,14 @@ const ANTDOWN=2;
 const ANTLEFT=3;
 
 export default class Ant{
-    constructor(i=0,j=0,width,max_row,max_col){
+    constructor(i=0,j=0,width,max_row,max_col,firstAnt=false){
         this.pos={i:i,j:j};
         this.direction=ANTUP;
         this.width=width;
         this.max_row=max_row-1;
         this.max_col=max_col-1;
         this.offset=width/2;//to center the ant in an cell
+        this.firstAnt=firstAnt; // The first ant is drawn in a different color
     }
 
     //Sets the position of the Ant
@@ -68,7 +69,7 @@ export default class Ant{
     draw(){
         var canvas = document.getElementById("2d-plane");
         var context = canvas.getContext("2d");
-        context.fillStyle ="blue";
+        context.fillStyle = this.firstAnt?"yellow":"blue";
         context.beginPath();
         context.arc(this.pos.i*this.width+this.offset, this.pos.j*this.width+this.offset, this.offset, 0, 2*Math.PI);
         context.fill();

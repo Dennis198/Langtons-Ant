@@ -76,6 +76,7 @@ export default class LangtonsAnt extends React.Component{
             speed:10,//in ms
             mouseDown: false,
             setNewAntPosition:false,
+            addNewAnt: false,
         }
     }
 
@@ -146,12 +147,19 @@ export default class LangtonsAnt extends React.Component{
         this.setState({mouseDown: !this.state.mouseDown})
     }
 
-    //
-    moveAntOnClick(e){
+    //Allow two move the first Ant to a new Position by clicking on the canvas
+    moveAntOnClick(){
+        if(this.state.addNewAnt) this.setState({addNewAnt:false});
         this.setState({setNewAntPosition: !this.state.setNewAntPosition});        
     }
 
-    //Sets the new Position of the Ant
+    //Allow two add a new Ant by clicking on the canvas
+    addAntOnClick(){
+      if(this.state.setNewAntPosition) this.setState({setNewAntPosition:false});
+      this.setState({addNewAnt: !this.state.addNewAnt});        
+    }
+
+    //Sets the new Position of the first Ant
     setNewAntPosition(e){
         var canvas = document.getElementById("2d-plane");
         var pos = this.getMousePos(canvas, e);
@@ -160,8 +168,17 @@ export default class LangtonsAnt extends React.Component{
         this.state.field.setAntPosition(i,j);
     }
 
+    //Add the new Ant on Click on the given position on the canvas
+    addNewAntHere(e){
+        var canvas = document.getElementById("2d-plane");
+        var pos = this.getMousePos(canvas, e);
+        let i= Math.floor(pos.x/(RESOLUTION));
+        let j= Math.floor(pos.y/(RESOLUTION));
+        this.state.field.addNewAnt(i,j, RESOLUTION);
+    }
+
     render(){
-        const {isRunning, counterIteration, setNewAntPosition} = this.state;
+        const {isRunning, counterIteration, setNewAntPosition, addNewAnt} = this.state;
         return(
             <div className="angtonsant">
                 <h1>Langton's ant</h1>
@@ -169,6 +186,7 @@ export default class LangtonsAnt extends React.Component{
                 <Button disabled={isRunning} variant="outlined" onClick={()=>this.oneStep()}>Next Step</Button>
                 <Button variant="outlined" onClick={()=>this.stop()}>Stop</Button>
                 <Button variant={setNewAntPosition?"contained":"outlined"} color="primary" onClick={()=>this.moveAntOnClick()}>Move Ant</Button>
+                <Button variant={addNewAnt?"contained":"outlined"} color="primary" onClick={()=>this.addAntOnClick()}>Add Ant</Button>
                 <Button variant="outlined" onClick={()=>this.reset()}>Reset</Button>
                 <div className="angtonsant__speed__slider">
                     <h4>Computation Speed of an Iteration (ms)</h4>
@@ -179,8 +197,8 @@ export default class LangtonsAnt extends React.Component{
                 </div>
                 <h4>Iterations: {counterIteration}</h4>
                 <canvas className="angtonsant_canvas__2dplane" id="2d-plane" width={CANVAS_WIDTH} height={CANVAS_HEIGHT}
-                    onMouseDown={!setNewAntPosition? ()=>this.allowDrawOnCanvas():(e)=>this.setNewAntPosition(e)}
-                    onMouseUp={!setNewAntPosition? ()=>this.allowDrawOnCanvas():()=>null}
+                    onMouseDown={!setNewAntPosition? !addNewAnt? ()=>this.allowDrawOnCanvas():(e)=>this.addNewAntHere(e):(e)=>this.setNewAntPosition(e)}
+                    onMouseUp={!setNewAntPosition && !addNewAnt ? ()=>this.allowDrawOnCanvas():()=>null}
                     onMouseMove={(e) => this.mouseMove(e)}
                 ></canvas>
             </div>
