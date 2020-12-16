@@ -2,15 +2,23 @@
     border: 2px solid black;
 }
 
-.angtonsant__speed__slider{
+.langtonsant>h4{
+    margin-top: -5px;
+}
+
+.langtonsant__sliders{
     margin: 0 auto;
     width: 50%;
+    display: flex;
+    justify-content: space-around;
 }
 
-.angtonsant__speed__slider>h4{
-margin-bottom: -5px;
+.langtonsant__sliders_slider{
+    width: 100%;
+    margin-left: 20px;
+    margin-bottom: -30px;
 }
 
-.angtonsant>h4{
-    margin-top: -5px;
+.langtonsant__sliders_slider >h4{
+    margin-bottom: -5px;
 }

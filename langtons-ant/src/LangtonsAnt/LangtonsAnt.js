@@ -63,7 +63,7 @@ import PropTypes from 'prop-types';
 const CANVAS_WIDTH=900;
 const CANVAS_HEIGHT=380;
 const RESOLUTION=5;
-const DEAFULT_SPEED=10;
+const DEFAULT_SPEED=10;
 
 export default class LangtonsAnt extends React.Component{
     intervalID = 0;
@@ -73,10 +73,11 @@ export default class LangtonsAnt extends React.Component{
             field: new Field(CANVAS_WIDTH/RESOLUTION,CANVAS_HEIGHT/RESOLUTION,RESOLUTION),
             isRunning:false,
             counterIteration:0,
-            speed:10,//in ms
+            speed:DEFAULT_SPEED,//in ms
             mouseDown: false,
             setNewAntPosition:false,
             addNewAnt: false,
+            resolution: RESOLUTION,
         }
     }
 
@@ -106,7 +107,7 @@ export default class LangtonsAnt extends React.Component{
 
     //Resets the Canvas to the initial State
     reset(){
-        this.setState({field: new Field(CANVAS_WIDTH/RESOLUTION,CANVAS_HEIGHT/RESOLUTION,RESOLUTION), counterIteration:0})
+        this.setState({field: new Field(Math.ceil(CANVAS_WIDTH/this.state.resolution),Math.ceil(CANVAS_HEIGHT/this.state.resolution),this.state.resolution), counterIteration:0})
         setTimeout(() => {
             this.state.field.draw();    
         }, 10);       
@@ -119,8 +120,8 @@ export default class LangtonsAnt extends React.Component{
         } 
         var canvas = document.getElementById("2d-plane");
         var pos = this.getMousePos(canvas, e);
-        let i= Math.floor(pos.x/(RESOLUTION));
-        let j= Math.floor(pos.y/(RESOLUTION));
+        let i = Math.floor(pos.x/(this.state.resolution));
+        let j = Math.floor(pos.y/(this.state.resolution));
         this.state.field.setStateOfCell(i,j);
     }
 
@@ -131,6 +132,16 @@ export default class LangtonsAnt extends React.Component{
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top
         };
+    }
+
+    
+     //Handles the Resolution Change (Slider) and creates a new Field
+    handleResolutionChange(e, val){
+      this.stop();
+      this.setState({resolution: val, field: new Field(Math.ceil(CANVAS_WIDTH/val),Math.ceil(CANVAS_HEIGHT/val),val)});
+      setTimeout(() => {
+          this.state.field.draw();
+      },10);
     }
 
     //Handles the speed change for the iteration timer
@@ -163,8 +174,8 @@ export default class LangtonsAnt extends React.Component{
     setNewAntPosition(e){
         var canvas = document.getElementById("2d-plane");
         var pos = this.getMousePos(canvas, e);
-        let i= Math.floor(pos.x/(RESOLUTION));
-        let j= Math.floor(pos.y/(RESOLUTION));
+        let i= Math.floor(pos.x/(this.state.resolution));
+        let j= Math.floor(pos.y/(this.state.resolution));
         this.state.field.setAntPosition(i,j);
     }
 
@@ -172,9 +183,9 @@ export default class LangtonsAnt extends React.Component{
     addNewAntHere(e){
         var canvas = document.getElementById("2d-plane");
         var pos = this.getMousePos(canvas, e);
-        let i= Math.floor(pos.x/(RESOLUTION));
-        let j= Math.floor(pos.y/(RESOLUTION));
-        this.state.field.addNewAnt(i,j, RESOLUTION);
+        let i= Math.floor(pos.x/(this.state.resolution));
+        let j= Math.floor(pos.y/(this.state.resolution));
+        this.state.field.addNewAnt(i,j, this.state.resolution);
     }
 
     render(){
@@ -188,12 +199,21 @@ export default class LangtonsAnt extends React.Component{
                 <Button variant={setNewAntPosition?"contained":"outlined"} color="primary" onClick={()=>this.moveAntOnClick()}>Move Ant</Button>
                 <Button variant={addNewAnt?"contained":"outlined"} color="primary" onClick={()=>this.addAntOnClick()}>Add Ant</Button>
                 <Button variant="outlined" onClick={()=>this.reset()}>Reset</Button>
-                <div className="angtonsant__speed__slider">
-                    <h4>Computation Speed of an Iteration (ms)</h4>
+                <div className="langtonsant__sliders">
+                    <div className="langtonsant__sliders_slider">
+                        <h4>Resolution</h4>
+                        <PrettoSlider disabled={isRunning} valueLabelDisplay="off"
+                        aria-label="pretto slider" defaultValue={10} min={5} max={40} step={5}
+                        onChange={(e, val) => this.handleResolutionChange(e, val)}  
+                        />
+                    </div>
+                    <div className="langtonsant__sliders_slider">
+                    <h4>Computation Speed(ms)</h4>
                     <PrettoSlider valueLabelDisplay="on"
-                        aria-label="pretto slider" defaultValue={DEAFULT_SPEED} min={0.1} max={100} step={0.1}
+                        aria-label="pretto slider" defaultValue={DEFAULT_SPEED} min={0.1} max={100} step={0.1}
                         onChange={(e, val) => this.handleSpeedChange(e, val)}  
                     />
+                    </div>
                 </div>
                 <h4>Iterations: {counterIteration}</h4>
                 <canvas className="angtonsant_canvas__2dplane" id="2d-plane" width={CANVAS_WIDTH} height={CANVAS_HEIGHT}
